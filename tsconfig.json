@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "ethereum/factory.js"  ],
+, "ethereum/factory.js", "pages/index.tsx"  ],
   "exclude": [
     "node_modules"
   ]

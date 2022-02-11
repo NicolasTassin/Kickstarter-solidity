@@ -1,32 +1,28 @@
 import Web3 from "web3";
 import { useEffect, useState } from "react";
 
+const web3Init = () => {
+  
 
-export const web3 = async () => { 
-    
-    const [web3, setWeb3] = useState(null);
+  useEffect(async () => {
 
     if (window.ethereum) {
-        try {
-         await window.ethereum.request({ method: 'eth_requestAccounts' });
-         let web3 = await new Web3(window.ethereum);
-         setWeb3(web3);
-         return web3
-        } catch (error) {
-          if (error.code === 4001) {
-            // User rejected request
-          }
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      console.log(accounts, "accounts");
+      setAddress(accounts[0]);
+      let web3 = await new Web3(ethereum);
       
-          setError(error);
-        }
-      }
-    
-    return web3
+      console.log(web3, "web3");
+      return web3
+    } else {
+      console.log("install metamask");
+    }
+      
+  }, []);
+  return web3
+  
+};
 
-
-}
-
-
- 
-
- 
+export default web3Init;
