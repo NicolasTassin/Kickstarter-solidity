@@ -1,28 +1,19 @@
 import Web3 from "web3";
-import { useEffect, useState } from "react";
 
-const web3Init = () => {
-  
+let web3;
 
-  useEffect(async () => {
+if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
+  // We are in the browser and metamask is running.
+  window.ethereum.request({ method: "eth_requestAccounts" });
+  web3 = new Web3(window.ethereum);
+  console.log("web3 1");
+} else {
+  // We are on the server *OR* the user is not running metamask
+  const provider = new Web3.providers.HttpProvider(
+    "https://rinkeby.infura.io/v3/a1c48696c83f469c838298470030eed1"
+  );
+  console.log("web3 1");
+  web3 = new Web3(provider);
+}
 
-    if (window.ethereum) {
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      console.log(accounts, "accounts");
-      setAddress(accounts[0]);
-      let web3 = await new Web3(ethereum);
-      
-      console.log(web3, "web3");
-      return web3
-    } else {
-      console.log("install metamask");
-    }
-      
-  }, []);
-  return web3
-  
-};
-
-export default web3Init;
+export default web3;
