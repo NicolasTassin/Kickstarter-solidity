@@ -1,8 +1,10 @@
 //@ts-nocheck
 import React, { useEffect, useState } from "react";
 import instance from "../ethereum/factory.js";
-import { StyledButton } from "./index.styles.ts";
-import { Card } from "semantic-ui-react";
+import { Card, Button } from "semantic-ui-react";
+import Layout from "../components/Layout";
+import Link from "next/link";
+
 export default function IndexCampaign({ campaigns }) {
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
@@ -12,7 +14,14 @@ export default function IndexCampaign({ campaigns }) {
     const items = campaigns.map((address) => {
       return {
         header: address,
-        description: "view Campaign",
+        description: (
+          <Link href={{
+            pathname: '/campaigns/[address]',
+            query: { address: address },
+          }}>
+            <a>View Campaign</a>
+          </Link>
+        ),
         fluid: true,
       };
     });
@@ -20,18 +29,23 @@ export default function IndexCampaign({ campaigns }) {
   };
 
   return (
-    <>
-     
+    <Layout>
       <div>
-      <link
-    async
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
-  />
-  
+        <h3>Open Campaigns</h3>
+        <Link href="/campaigns/new">
+          <a className="item">
+            <Button
+              content="Create Campaign"
+              icon="add circle"
+              floated="right"
+              primary
+            />
+          </a>
+        </Link>
+
         {renderCampaigns()}
-        </div>
-    </>
+      </div>
+    </Layout>
   );
 }
 
