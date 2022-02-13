@@ -41,8 +41,19 @@ contract Campaign{
         _;
     }
 
-    function getDetails() public view returns (string memory, uint, address, uint, address){
-        return (requests[numRequests].description, requests[numRequests].value, requests[numRequests].recipient, requests[numRequests].approvalCount, manager);
+    function getDetails() public view returns (
+        uint, 
+        uint, 
+        uint, 
+        uint, 
+        address){
+        return (
+            minimumContribution,
+            address(this).balance,
+            numRequests,
+            approversCount,
+            manager 
+            );
     }
 
     function contribute() public payable {
